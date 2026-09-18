@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhay Kumar — Video Editor & Website Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0D0C;
+    --panel:#121512;
+    --panel-2:#181C18;
+    --gold:#C9A227;
+    --lime:#8FBF3F;
+    --steel:#9CA39C;
+    --bone:#F3F1EA;
+    --line: rgba(243,241,234,0.10);
+    --wa:#25D366;
+    --wa-dark:#128C7E;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:var(--body);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  .progress-rail{
+    position:fixed; top:0; left:0; right:0; height:3px; z-index:200;
+    background:transparent;
+  }
+  .progress-fill{
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold), var(--lime));
+    transition:width 0.08s linear;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,13,12,0.90);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px; max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:var(--display); font-size:26px; letter-spacing:1.5px;
+    color:var(--bone); text-transform:uppercase;
+  }
+  .logo span{color:var(--gold);}
+  .nav-links{
+    display:flex; gap:30px; list-style:none;
+    font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+  }
+  .nav-links a{
+    color:var(--steel); transition:color 0.2s ease;
+  }
+  .nav-links a:hover{color:var(--bone);}
+  .btn{
+    display:inline-block; font-family:var(--body); font-weight:700;
+    font-size:13px; letter-spacing:0.03em; text-transform:uppercase;
+    padding:13px 26px; border-radius:3px; cursor:pointer; border:none;
+    transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+  }
+  .btn-primary{ background:var(--gold); color:var(--ink); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 6px 20px rgba(201,162,39,0.28); }
+  .btn-ghost{ background:transparent; color:var(--bone); border:1px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--bone); }
+
+  /* WHATSAPP BUTTON (the star of the show) */
+  .btn-wa{
+    background:var(--wa);
+    color:#fff;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    box-shadow:0 8px 25px rgba(37,211,102,0.35);
+  }
+  .btn-wa:hover{
+    background:var(--wa-dark);
+    transform:translateY(-3px);
+    box-shadow:0 12px 35px rgba(37,211,102,0.55);
+  }
+  .btn-wa svg{ width:20px; height:20px; fill:#fff; }
+
+  .menu-toggle{display:none; background:none; border:none; color:var(--bone); font-size:26px; cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh; display:flex; align-items:center;
+    position:relative; padding:140px 0 80px;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% 15%, rgba(201,162,39,0.12), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 90%, rgba(37,211,102,0.08), transparent 60%),
+      var(--ink);
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);
+    opacity:0.5;
+  }
+  .hero-inner{position:relative; z-index:2;}
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--gold);
+    letter-spacing:0.2em; text-transform:uppercase; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:26px; height:2px; background:var(--gold); display:inline-block;}
+  .hero h1{
+    font-family:var(--display); text-transform:uppercase;
+    font-size:clamp(46px, 8vw, 100px); line-height:0.96; letter-spacing:0.5px;
+    max-width:900px;
+    animation:riseIn 0.9s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .hero h1 .accent{color:var(--gold);}
+  @keyframes riseIn{ from{opacity:0; transform:translateY(24px);} to{opacity:1; transform:translateY(0);} }
+  .hero p.lede{
+    margin-top:26px; max-width:560px; font-size:18px; line-height:1.6; color:var(--steel);
+    animation:riseIn 0.9s 0.15s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .hero-ctas{ margin-top:38px; display:flex; gap:16px; flex-wrap:wrap;
+    animation:riseIn 0.9s 0.3s cubic-bezier(.2,.8,.2,1) both;}
+  .btn-lg{padding:17px 32px; font-size:14px;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:110px 0;}
+  .section-head{ max-width:680px; margin-bottom:56px; }
+  .section-tag{
+    font-family:var(--mono); font-size:12px; color:var(--gold);
+    text-transform:uppercase; letter-spacing:0.18em; margin-bottom:14px; display:block;
+  }
+  .section-head h2{
+    font-family:var(--display); text-transform:uppercase;
+    font-size:clamp(32px,4.5vw,54px); line-height:1.02;
+  }
+  .section-head p{ margin-top:16px; color:var(--steel); font-size:16px; line-height:1.65; }
+
+  /* ---------- SKILLS ---------- */
+  .skills{ background:var(--ink); padding:110px 0; }
+  .skills-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:28px;
+    max-width:1100px; margin:0 auto;
+  }
+  .skill-card{
+    background:linear-gradient(160deg, #121512, #0B0D0C);
+    border:1px solid rgba(201,162,39,0.25);
+    padding:36px 32px; position:relative;
+    transition:0.35s ease; overflow:hidden;
+  }
+  .skill-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--gold), var(--lime));
+    transform:scaleX(0); transform-origin:left;
+    transition:transform 0.4s ease;
+  }
+  .skill-card:hover::before{ transform:scaleX(1); }
+  .skill-card:hover{
+    border-color:var(--gold);
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(201,162,39,0.12);
+  }
+  .skill-card .sk-num{
+    font-family:var(--mono); font-size:12px; color:var(--gold);
+    letter-spacing:0.2em; margin-bottom:16px; display:block;
+  }
+  .skill-card h3{
+    font-family:var(--display); font-size:28px;
+    text-transform:uppercase; letter-spacing:0.5px;
+    margin-bottom:12px; color:var(--bone);
+  }
+  .skill-card p{
+    color:var(--steel); font-size:14.5px;
+    line-height:1.65; margin-bottom:22px;
+  }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-tags span{
+    font-family:var(--mono); font-size:11px;
+    text-transform:uppercase; letter-spacing:0.08em;
+    padding:6px 12px; border:1px solid var(--line);
+    border-radius:2px; color:var(--steel); transition:0.25s;
+  }
+  .skill-card:hover .skill-tags span{
+    border-color:rgba(201,162,39,0.4); color:var(--bone);
+  }
+  .skill-bar{
+    margin-top:22px; height:4px;
+    background:rgba(243,241,234,0.08);
+    border-radius:2px; overflow:hidden;
+  }
+  .skill-bar-fill{
+    height:100%; background:linear-gradient(90deg, var(--gold), var(--lime));
+    border-radius:2px; width:0%;
+    transition:width 1.2s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+    max-width:1100px; margin:0 auto;
+  }
+  .work{
+    height:240px; border-radius:3px;
+    display:flex; align-items:flex-end; padding:26px;
+    font-family:var(--display); font-size:22px; letter-spacing:0.5px;
+    text-transform:uppercase; color:#fff;
+    transition:0.35s; cursor:pointer;
+    position:relative; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .work::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1));
+    transition:0.35s;
+  }
+  .work span{ position:relative; z-index:1; }
+  .work:hover::after{ background:linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.3)); }
+  .work:hover{ transform:translateY(-6px); border-color:var(--gold); }
+  .w1{ background:linear-gradient(135deg, #C9A227, #8FBF3F); }
+  .w2{ background:linear-gradient(135deg, #3b82f6, #8b5cf6); }
+  .w3{ background:linear-gradient(135deg, #ec4899, #f59e0b); }
+  .w4{ background:linear-gradient(135deg, #10b981, #3b82f6); }
+  .w5{ background:linear-gradient(135deg, #f59e0b, #ef4444); }
+  .w6{ background:linear-gradient(135deg, #8b5cf6, #06b6d4); }
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:var(--line); border:1px solid var(--line);
+    max-width:1100px; margin:0 auto;
+  }
+  .stat{
+    background:var(--ink); padding:44px 24px; text-align:center;
+    transition:background 0.25s ease;
+  }
+  .stat:hover{ background:var(--panel); }
+  .stat h3{
+    font-family:var(--display); font-size:52px;
+    color:var(--gold); line-height:1;
+  }
+  .stat p{
+    color:var(--steel); font-size:13px;
+    text-transform:uppercase; letter-spacing:0.1em; margin-top:10px;
+    font-family:var(--mono);
+  }
+
+  /* ---------- WHATSAPP CONTACT SECTION ---------- */
+  .contact{
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    text-align:center;
+  }
+  .contact .section-head{ margin-left:auto; margin-right:auto; text-align:center; }
+  .wa-block{
+    max-width:640px; margin:0 auto;
+    background:var(--ink);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:56px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .wa-block::before{
+    content:""; position:absolute;
+    top:-60px; left:50%; transform:translateX(-50%);
+    width:300px; height:300px;
+    background:var(--wa); filter:blur(120px); opacity:0.18;
+    pointer-events:none;
+  }
+  .wa-block > *{ position:relative; z-index:1; }
+  .wa-icon-big{
+    width:80px; height:80px;
+    background:var(--wa);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 26px;
+    box-shadow:0 12px 40px rgba(37,211,102,0.45);
+    animation:pulse 2s infinite;
+  }
+  .wa-icon-big svg{ width:44px; height:44px; fill:#fff; }
+  @keyframes pulse{
+    0%, 100%{ transform:scale(1); box-shadow:0 12px 40px rgba(37,211,102,0.45);}
+    50%{ transform:scale(1.06); box-shadow:0 18px 55px rgba(37,211,102,0.65);}
+  }
+  .wa-block h3{
+    font-family:var(--display);
+    font-size:clamp(28px,4vw,40px);
+    text-transform:uppercase; letter-spacing:0.5px;
+    margin-bottom:14px;
+  }
+  .wa-block p{
+    color:var(--steel); font-size:16px; line-height:1.6;
+    margin-bottom:34px; max-width:440px; margin-left:auto; margin-right:auto;
+  }
+  .wa-btn-main{
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--wa); color:#fff;
+    padding:18px 40px; border-radius:50px;
+    font-weight:800; font-size:16px; letter-spacing:0.03em;
+    text-transform:uppercase;
+    box-shadow:0 10px 35px rgba(37,211,102,0.4);
+    transition:0.3s;
+  }
+  .wa-btn-main:hover{
+    background:var(--wa-dark);
+    transform:translateY(-4px);
+    box-shadow:0 16px 45px rgba(37,211,102,0.6);
+  }
+  .wa-btn-main svg{ width:24px; height:24px; fill:#fff; }
+  .wa-number{
+    display:block; margin-top:20px;
+    font-family:var(--mono); font-size:14px; color:var(--steel);
+    letter-spacing:0.1em;
+  }
+  .wa-other{
+    margin-top:36px; padding-top:30px;
+    border-top:1px dashed var(--line);
+    display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+  }
+  .wa-other a{
+    font-family:var(--mono); font-size:12px;
+    color:var(--steel); text-transform:uppercase; letter-spacing:0.08em;
+    padding:10px 18px; border:1px solid var(--line); border-radius:3px;
+    transition:0.25s;
+  }
+  .wa-other a:hover{ color:var(--gold); border-color:var(--gold); }
+
+  /* ---------- FLOATING WHATSAPP BUTTON ---------- */
+  .wa-float{
+    position:fixed; bottom:28px; right:28px; z-index:150;
+    width:62px; height:62px; border-radius:50%;
+    background:var(--wa);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(37,211,102,0.5);
+    transition:0.3s;
+    animation:floatPulse 2.5s infinite;
+  }
+  .wa-float svg{ width:34px; height:34px; fill:#fff; }
+  .wa-float:hover{
+    background:var(--wa-dark);
+    transform:scale(1.12) translateY(-3px);
+  }
+  @keyframes floatPulse{
+    0%, 100%{ box-shadow:0 10px 30px rgba(37,211,102,0.5); }
+    50%{ box-shadow:0 10px 45px rgba(37,211,102,0.9); }
+  }
+  @media (max-width:600px){
+    .wa-float{ width:56px; height:56px; bottom:20px; right:20px; }
+    .wa-float svg{ width:30px; height:30px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:56px 0 40px; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:30px; }
+  .foot-links{ display:flex; gap:32px; list-style:none; font-size:13px; color:var(--steel); text-transform:uppercase; letter-spacing:0.05em; flex-wrap:wrap;}
+  .foot-links a:hover{ color:var(--bone); }
+  .foot-bottom{
+    margin-top:40px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:12px; color:var(--steel); font-family:var(--mono);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .skills-grid{ grid-template-columns:1fr; }
+    .portfolio-grid{ grid-template-columns:1fr 1fr; }
+    .stats{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    nav{ padding:14px 20px; }
+    .wrap{ padding:0 20px; }
+    section{ padding:80px 0; }
+    .wa-block{ padding:40px 24px; }
+  }
+  @media (max-width:560px){
+    .portfolio-grid{ grid-template-columns:1fr; }
+    .stat h3{ font-size:42px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-rail" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#" class="logo">ABHAY <span>KUMAR</span></a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="https://wa.me/919454378402?text=Hi%20Abhay%2C%20I%20want%20to%20discuss%20a%20project" 
+         target="_blank" 
+         class="btn btn-wa">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat Now
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Available for Freelance · India</span>
+    <h1>Video Editor &<br><span class="accent">Website Designer.</span></h1>
+    <p class="lede">I create scroll-stopping video edits, high-CTR thumbnails, and clean, modern websites that help creators and brands grow faster and look professional.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-primary btn-lg">View My Work</a>
+      <a href="https://wa.me/919454378402?text=Hi%20Abhay%2C%20I%20want%20to%20discuss%20a%20project" 
+         target="_blank" 
+         class="btn btn-wa btn-lg">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Me
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">My Skills · What I Bring To The Table</span>
+      <h2>Menu of services I serve</h2>
+      <p>From raw footage to scroll-stopping thumbnails and clean websites — here's everything I do best.</p>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <span class="sk-num">— 01 / VIDEO EDITOR</span>
+        <h3>Video Editing</h3>
+        <p>Cinematic cuts, smooth transitions, color grading and sound design — for YouTube, ads, and long-form content that keeps viewers watching.</p>
+        <div class="skill-tags">
+          <span>Premiere Pro</span>
+          <span>After Effects</span>
+          <span>Color Grading</span>
+          <span>Sound Design</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="95%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="sk-num">— 02 / THUMBNAIL EDITOR</span>
+        <h3>Thumbnail Design</h3>
+        <p>High-CTR YouTube thumbnails that grab attention in a crowded feed — bold text, clean composition, and click-worthy visuals.</p>
+        <div class="skill-tags">
+          <span>Photoshop</span>
+          <span>Click-Worthy</span>
+          <span>Bold Typography</span>
+          <span>Retention Focused</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="92%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="sk-num">— 03 / WEBSITE DESIGNER</span>
+        <h3>Website Design</h3>
+        <p>Modern, responsive websites that look sharp on every device — built to convert visitors into real customers.</p>
+        <div class="skill-tags">
+          <span>HTML / CSS</span>
+          <span>Responsive</span>
+          <span>Landing Pages</span>
+          <span>UI Design</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="90%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="sk-num">— 04 / REELS & SHORTS EDITOR</span>
+        <h3>Reels & Shorts Editing</h3>
+        <p>Fast-paced, punchy vertical edits built for Instagram, YouTube Shorts and TikTok — with hooks, captions and beat-synced cuts.</p>
+        <div class="skill-tags">
+          <span>Vertical Edits</span>
+          <span>Captions</span>
+          <span>Beat Sync</span>
+          <span>Viral Hooks</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="94%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="sk-num">— 05 / DATA SIMPLIFIER</span>
+        <h3>Big Data → Simple Menu</h3>
+        <p>Turning messy, complex data into clean, easy-to-read menu-style layouts — like a restaurant menu card: simple, visual, and instantly understood.</p>
+        <div class="skill-tags">
+          <span>Data Layout</span>
+          <span>Menu Card Design</span>
+          <span>Infographics</span>
+          <span>Visual Simplicity</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="88%"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <span class="sk-num">— 06 / MOTION GRAPHICS</span>
+        <h3>Motion Graphics</h3>
+        <p>Animated logos, intros, lower thirds and transitions that give your brand a polished, professional feel.</p>
+        <div class="skill-tags">
+          <span>Logo Animation</span>
+          <span>Intros</span>
+          <span>Lower Thirds</span>
+          <span>Transitions</span>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-width="85%"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Recent Work · Portfolio</span>
+      <h2>Selected projects</h2>
+      <p>A glimpse of what I've created for creators, brands, and businesses.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="work w1"><span>YouTube Video Edit</span></div>
+      <div class="work w2"><span>Instagram Reel</span></div>
+      <div class="work w3"><span>Thumbnail Design</span></div>
+      <div class="work w4"><span>Business Website</span></div>
+      <div class="work w5"><span>Logo Animation</span></div>
+      <div class="work w6"><span>Product Ad Edit</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Why Choose Me · Numbers</span>
+      <h2>Results that speak</h2>
+      <p>Consistent delivery, happy clients, and quality work that keeps them coming back.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><h3>50+</h3><p>Projects Done</p></div>
+      <div class="stat"><h3>30+</h3><p>Happy Clients</p></div>
+      <div class="stat"><h3>24h</h3><p>Fast Delivery</p></div>
+      <div class="stat"><h3>100%</h3><p>Satisfaction</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT (WHATSAPP ONLY) -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Contact · Let's Work Together</span>
+      <h2>Let's build something great</h2>
+      <p>Fastest way to reach me — message me directly on WhatsApp. I reply within minutes.</p>
+    </div>
+
+    <div class="wa-block">
+      <div class="wa-icon-big">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <h3>Message Me on WhatsApp</h3>
+      <p>Tap the button below to start a conversation. Tell me about your project and I'll get back to you within minutes.</p>
+      <a href="https://wa.me/919454378402?text=Hi%20Abhay%2C%20I%20want%20to%20discuss%20a%20project" 
+         target="_blank" 
+         class="wa-btn-main">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Start WhatsApp Chat
+      </a>
+      <span class="wa-number">+91 94543 78402</span>
+
+      <div class="wa-other">
+        <a href="tel:9454378402">📞 Call Me</a>
+        <a href="mailto:abhaykumar94343784@gmail.com">📧 Email Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a href="#" class="logo">ABHAY <span>KUMAR</span></a>
+      <ul class="foot-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ABHAY KUMAR</span>
+      <span>VIDEO EDITOR · WEB DESIGNER</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/919454378402?text=Hi%20Abhay%2C%20I%20want%20to%20discuss%20a%20project" 
+   target="_blank" 
+   class="wa-float" 
+   aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // Scroll progress bar
+  const fill = document.getElementById('progressFill');
+  function updateProgress(){
+    const scrolled = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? Math.min(100, (scrolled / max) * 100) : 0;
+    if(fill) fill.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  // Animate skill bars on scroll into view
+  const skillBars = document.querySelectorAll('.skill-bar-fill');
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const bar = entry.target;
+        bar.style.width = bar.dataset.width;
+        skillObserver.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.4 });
+  skillBars.forEach(bar => skillObserver.observe(bar));
+</script>
+
+</body>
+</html>
